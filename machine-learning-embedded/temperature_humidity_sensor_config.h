@@ -1,4 +1,16 @@
 /**
+ * @brief Pino conectado ao barramento de dados do sensor.
+ *
+ */
+#define DHTPIN A1
+
+/**
+ * @brief Tipo do sensor de temperatura e umidade.
+ *
+ */
+#define DHTTYPE DHT11
+
+/**
  * @brief Função usada para configurar o sensor HTS221.
  *
  */
