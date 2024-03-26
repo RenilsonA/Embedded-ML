@@ -9,4 +9,8 @@
  */
 void mle_microphone_pdm_config();
 
-void serial_print();
+/**
+ * @brief Função usada para pegar intensidade do áudio.
+ *
+ */
+int mle_microphone_pdm_get_intensity();
