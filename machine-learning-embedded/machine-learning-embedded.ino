@@ -53,7 +53,7 @@ void setup() {
     input = interpreter->input(0);
     output = interpreter->output(0);
 
-    int64_t entrada[13][5] = {
+    int64_t entrada[18][5] = {
         {10,101,25,1200,90},
         {12,101,32,1000,50},
         {20,101,25,4000,50},
@@ -67,9 +67,14 @@ void setup() {
         {12,102,29,3000,20},
         {9,103,27,3000,60},
         {13,102,30,3000,80},
+        {6,101,20,1000,40},
+        {4,102,17,1000,20},
+        {1,98,16,400,100},
+        {2,100,22,300,90},
+        {0,95,21,250,80},
     };
 
-    for (int i = 0; i < 12; i++) {
+    for (int i = 0; i < 18; i++) {
         input = interpreter->input(0);
         input->data.f[0] = entrada[i][0];
         input->data.f[1] = entrada[i][1];
@@ -87,7 +92,7 @@ void setup() {
             Serial.print(": ");
             Serial.print(output->data.f[j], 4);
             if(j < (NUM_LABELS - 1)){
-                Serial.print("  //  ");
+                Serial.print("  ||||  ");
             }
         }
         Serial.println();
@@ -141,5 +146,5 @@ void loop(){
     }
     Serial.println();
 
-    delay(1000);
+    delay(10000);
 }
