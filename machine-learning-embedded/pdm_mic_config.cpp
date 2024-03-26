@@ -5,9 +5,11 @@
  * Estrutura padrão das variáveis usadas para o microfone.
  */
 static struct variables{
+    bool new_sample;
     volatile int samplesRead;
     uint16_t sampleBuffer[MLE_MICROPHONE_SAMPLE_BUFFER_SIZE];
 } self = {
+    .new_sample = false,
     .samplesRead = 0,
     .sampleBuffer = {},
 };
@@ -17,19 +19,36 @@ static struct variables{
  *
  */
 static void mle_microphone_callback() {
+    self.new_sample = true;
+
     /** Número de bytes das amostras disponíveis. */
-    int bytesAvailable = PDM.available();
+    self.samplesRead = PDM.available();
 
     /** Lê o buffer de amostra. */
     PDM.read(self.sampleBuffer, MLE_MICROPHONE_SAMPLE_BUFFER_SIZE);
 }
 
 void serial_print(){
-    for(int i = 0; i < 16; i++){
-        Serial.print(self.sampleBuffer[i]);
-        Serial.print(", ");
+    if(self.new_sample){
+        self.new_sample = false;
+        uint16_t maxAmplitude = 0;
+        for (int i = 0; i < self.samplesRead; i++) {
+            if (abs(self.sampleBuffer[i]) > maxAmplitude) {
+                maxAmplitude = abs(self.sampleBuffer[i]);
+            }
+        }
+        float intensity_dB = 20.0 * log10(maxAmplitude / 32767);
+        Serial.print("Intensidade do som em dB SPL: ");
+        Serial.println(intensity_dB);
+
+        Serial.print("Intensidade do som em dB SPL: ");
+        Serial.println(20.0 * log10(maxAmplitude / 20.0e-6));
     }
-    Serial.println();
+    // for(int i = 0; i < 16; i++){
+    //     Serial.print(self.sampleBuffer[i]);
+    //     Serial.print(", ");
+    // }
+    // Serial.println();
 }
 
 void mle_microphone_pdm_config() {

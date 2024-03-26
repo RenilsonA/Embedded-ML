@@ -2,7 +2,7 @@
  * @brief Pino conectado ao barramento de dados do sensor.
  *
  */
-#define DHTPIN A1
+#define DHTPIN A0
 
 /**
  * @brief Tipo do sensor de temperatura e umidade.
